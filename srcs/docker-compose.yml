@@ -1,0 +1,26 @@
+# - MARIADB_PASSWORD: "mbarra"
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./requirements/nginx/conf:/etc/nginx/conf.d
+    ports:
+      - 80:80
+      # - 443:443
+
+  php:
+    image: php:7.4-fpm
+    container_name: php
+    volumes:
+      - ./src:/var/www/html
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MARIADB_USER: 'mbarra'
+      MARIADB_DATABASE: 'db'
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
