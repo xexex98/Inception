@@ -1,17 +1,16 @@
-FROM alpine:latest
+FROM alpine:3.15
 
-RUN apk update && \
-    apk --no-cache add nginx
-    
-		
-RUN	adduser -D -g 'www' www && \
-    mkdir /www && \
-    chown -R www:www /var/lib/nginx && \
-    chown -R www:www /www
-		
+RUN apk update && apk upgrade
+
+RUN apk --no-cache add nginx
+
+RUN mkdir /www 
+
+RUN	mkdir -p /run/nginx
+
+RUN chmod 775 /run/nginx/
+
 COPY ./conf/* /etc/nginx/conf.d/
-
-# COPY ./default.conf /etc/nginx/conf.d/
 
 EXPOSE 80
 
